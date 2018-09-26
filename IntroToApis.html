@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="icon" type="image/png" href="img/circle-gdi-logo_boise.png"/>
+    <title>GDI APIs</title>
+  </head>
+  <body>
+    <h1>Image API</h1>
+    <img src="http://counter.digits.net/?counter={d5ba6c4f-bd07-cb84-5583-0f90772b9dff}&template=simple">
+
+    <h1>Google Maps API</h1>
+    <h2>Static Maps API</h2>
+    <p><a href="http://code.google.com/apis/maps/documentation/staticmaps/">API Documentation</a></p>
+    <p>Uses parameters: center, zoom, maptype, size and sensor.</p>
+    <img src="http://maps.google.com/maps/api/staticmap?center=48.8584,2.2945&zoom=16&maptype=satellite&size=250x300&sensor=false">
+
+    <h2>Streetview Maps API</h2>
+    <p><a href="https://developers.google.com/maps/documentation/streetview/">API Documentation</a></p>
+    <p>Uses parameters: size, location, fov, heading, pitch and sensor.</p>
+    <img src="http://maps.googleapis.com/maps/api/streetview?size=300x250&location=51.5030943,-0.1778232&fov=90&heading=370&pitch=-20&sensor=false">
+
+    <h2>Google Charts API</h2>
+    <p><a href="https://developers.google.com/chart/image/">API Documentation</a></p>
+    <img width="550" height="250" src="http://chart.apis.google.com/chart?cht=p&chs=550x250&chd=t:10,80,10&chco=FAFAFA,FFFF00,FAFAFA&chl=Does%20not%20resemble%20Pac-man|Resembles%20Pac-man&chtt=Percentage%20of%20Google%20Chart%20Which%20Resembles%20Pac-man">
+
+    <h2>New Charts API</h2>
+    <div id="chart_div" style="width: 400px; height: 120px;margin: 0 auto;"></div>
+
+    <h2>Youtube API within Iframe</h2>
+    <p><a href="https://developers.google.com/youtube/player_parameters#autohide">Parameters Reference</a></p>
+    <iframe width="420" height="315" src="https://www.youtube.com/embed/a0MhZ268fSY?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+
+    <script>
+      google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Memory', 80],
+          ['CPU', 55],
+          ['Network', 68]
+        ]);
+
+        var options = {
+          width: 400, height: 120,
+          redFrom: 90, redTo: 100,
+          yellowFrom:75, yellowTo: 90,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+
+        setInterval(function() {
+          data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 13000);
+        setInterval(function() {
+          data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+          chart.draw(data, options);
+        }, 5000);
+        setInterval(function() {
+          data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+          chart.draw(data, options);
+        }, 26000);
+      }
+    </script>
+
+    <h2>Pinterest</h2>
+    <script type="text/javascript" async defer src="//assets.pinterest.com/js/pinit.js"></script>
+    <a href="https://www.pinterest.com/pin/create/button/"><img src="img/pinit_fg_en_rect_gray_20.png" /></a>
+
+  </body>
+</html>

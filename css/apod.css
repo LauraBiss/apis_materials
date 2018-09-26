@@ -1,0 +1,29 @@
+body
+  margin 50px
+
+.jumbotron
+  padding 25px
+
+#reqObject
+  margin-bottom 25px
+
+#apod_explanation
+  margin-bottom 25px
+
+.bold
+  font-weight bold
+
+img
+  width 100%
+
+iframe
+  width 640px
+  height 385px
+  border 0
+
+#about
+  position absolute
+  top 10px
+  right 10px
+  a
+    text-decoration none

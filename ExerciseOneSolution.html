@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Video Watcher</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/exerciseOne.css">
+  <link rel="icon" type="image/png" href="img/circle-gdi-logo_boise.png"/>
+  <script type="text/javascript" src="js/youtube.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+ </head>
+ <body>
+   <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+       <h1 class="page-header">Best Videos Ever ❤</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <ul id="videos-list"></ul>
+      </div>
+      <div class="col-md-9" id="video-watcher">
+      </div>
+    </div>
+ <div id="chart_div" style="width: 400px; height: 120px;"></div>
+ <div id="counter"><a href="https://info.flagcounter.com/nEFy"><img src="https://s04.flagcounter.com/count/nEFy/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_12/viewers_0/labels_0/pageviews_0/flags_0/" alt="Flag Counter"></a></div>
+</div>
+
+ <script>
+   function addVideoToList(video) {
+      var videoLink = $('<a>');
+      videoLink.append(video.title);
+      var linkUrl = videoLink.attr('href');
+      var thumbnailUrl = youtube.generateThumbnailUrl(video.youtubeId);
+      var thumbnailImg = $('<img>');
+      thumbnailImg.attr('src', thumbnailUrl);
+      videoLink.append(thumbnailImg);
+
+      videoLink.on('click', function(e) {
+          e.preventDefault();
+          var videoTitle = $('<h2>');
+          videoTitle.html(video.title + ' <small>' + video.author + '</small>');
+          var videoEmbed = $('<iframe></iframe>');
+          videoEmbed.attr('src', youtube.generateEmbedUrl(video.youtubeId) + '?autoplay=1');
+          videoEmbed.attr('width', 560);
+          videoEmbed.attr('height', 315);
+
+          addRating(video.rating);
+
+          var videoWatcher = $('#video-watcher');
+          videoWatcher.hide();
+          videoWatcher.empty();
+          videoWatcher.append(videoTitle);
+          videoWatcher.append(videoEmbed);
+          videoWatcher.fadeIn();
+      });
+
+      var videoItem = $('<li>');
+      videoItem.append(videoLink);
+      $('#videos-list').append(videoItem);
+   }
+
+  var videos = [
+    {"youtubeId": "iiS6pG8hUNU",
+      "title": "Girl Develop It",
+      "author": "GDI",
+      "rating": 90
+    },
+    {"youtubeId": "MrmC7mFrdXE",
+      "title": "Step Inside: Micron Technology",
+      "author": "Engine Room",
+      "rating": 70
+    },
+    {"youtubeId": "8KA8_0Hk2N4",
+      "title": "The Fat Bob",
+      "author": "RevZilla",
+      "rating": 60
+    },
+    {"youtubeId": "epUk3T2Kfno",
+      "title": "Otters Holding Hands",
+      "author": "cynthiaholmes",
+      "rating": 100
+    }
+  ]
+
+  for (var i = 0; i < videos.length; i++) {
+     addVideoToList(videos[i]);
+  }
+
+ </script>
+ <script>
+   function addRating(rating) {
+      google.charts.load('current', {'packages':['gauge']});
+         google.charts.setOnLoadCallback(drawChart);
+         function drawChart() {
+           var data = google.visualization.arrayToDataTable([
+             ['Label', 'Value'],
+             ['Rating', rating],
+           ]);
+           var options = {
+             width: 400, height: 120,
+             redFrom: 90, redTo: 100,
+             yellowFrom:75, yellowTo: 90,
+             minorTicks: 5
+           };
+           var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+           chart.draw(data, options);
+        }
+      }
+    </script>
+ </body>
+</html>
